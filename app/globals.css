@@ -1,26 +1,102 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Cores da paleta VocalMed */
+  --teal-dark: #007c79;
+  --teal-medium: #1fa093;
+  --cyan-light: #00ccbd;
+  --gray-dark: #5e5e5e;
+  --gray-medium: #919191;
+  --gray-light: #f4f4f4;
+
+  /* Cores semânticas */
+  /* Fundo geral da aplicação (off-white) */
+  --background: #f4f4f4;
+  --foreground: #5e5e5e;
+  --primary: #007c79;
+  --primary-hover: #1fa093;
+  --primary-light: #00ccbd;
+  --muted: #f4f4f4;
+  --muted-foreground: #919191;
+  --border: #f4f4f4;
+  --accent: #00ccbd;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-light: var(--primary-light);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-accent: var(--accent);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
+/* Dark mode via classe */
+.dark {
+  --background: #0a0a0a;
+  --foreground: #f4f4f4;
+  --primary: #1fa093;
+  --primary-hover: #00ccbd;
+  --primary-light: #00ccbd;
+  --muted: #1a1a1a;
+  --muted-foreground: #919191;
+  --border: #2a2a2a;
+  --accent: #00ccbd;
+}
+
+/* Fallback para preferência do sistema (se não houver classe) */
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not(.light) {
     --background: #0a0a0a;
-    --foreground: #ededed;
+    --foreground: #f4f4f4;
+    --primary: #1fa093;
+    --primary-hover: #00ccbd;
+    --primary-light: #00ccbd;
+    --muted: #1a1a1a;
+    --muted-foreground: #919191;
+    --border: #2a2a2a;
+    --accent: #00ccbd;
   }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+}
+
+/* Container centralizado com max-width */
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+@media (min-width: 640px) {
+  .container {
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    padding-left: 4rem;
+    padding-right: 4rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .container {
+    padding-left: 5rem;
+    padding-right: 5rem;
+  }
 }
