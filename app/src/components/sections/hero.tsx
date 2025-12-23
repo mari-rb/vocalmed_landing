@@ -43,16 +43,22 @@ export function Hero() {
             </div>
 
             {/* CTA principal */}
-            <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-              <Button variant="primary" size="lg" className="px-8 py-4">
-                Começar demo gratuita
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-4">
+              <Button
+                variant="primary"
+                size="lg"
+                className="px-10 py-4 text-base font-bold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+                asChild
+              >
+                <a href="#precos">Ver planos e preços</a>
               </Button>
               <Button
                 variant="outline"
                 size="lg"
-                className="px-8 py-4 border-[#00a89a] text-[#007c79] hover:border-[#007c79] hover:bg-[#007c79] hover:text-white dark:border-[#00ccbd] dark:text-[#00ccbd] dark:hover:bg-[#00ccbd] dark:hover:text-[#0a0a0a]"
+                className="px-10 py-4 text-base font-semibold border-2 border-[#00a89a] text-[#00a89a] hover:border-[#00a89a] hover:bg-[#00a89a] hover:text-white dark:border-[#00ccbd] dark:text-[#00ccbd] dark:hover:bg-[#00ccbd] dark:hover:border-[#00ccbd] dark:hover:text-[#0a0a0a] transition-all duration-300 hover:scale-105 hover:shadow-lg"
+                asChild
               >
-                Ver exemplo de resumo de consulta
+                <a href="#prontuario">Ver exemplo de resumo</a>
               </Button>
             </div>
             <p className="text-sm text-[#919191]">

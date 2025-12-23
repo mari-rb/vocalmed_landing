@@ -130,7 +130,6 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({
       success: true,
       text: transcription.text,
-      duration: transcription.duration,
       medicalRecord,
     });
   } catch (error) {

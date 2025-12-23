@@ -1,12 +1,11 @@
 import { Navbar } from "././src/components/layout/navbar";
 import { Hero } from "././src/components/sections/hero";
 import { Section } from "././src/components/layout/section";
-import { FeatureCard } from "././src/components/ui/feature-card";
 import { CtaSection } from "././src/components/sections/cta-section";
 import { Testimonial } from "././src/components/ui/testimonial";
 import { Footer } from "././src/components/layout/footer";
 import { ScrollToTop } from "././src/components/ui/scroll-to-top";
-import { LogoGrid } from "././src/components/ui/logo-grid";
+import { PricingSection } from "././src/components/ui/pricing-section";
 import Image from "next/image";
 import {
   Stethoscope,
@@ -14,7 +13,6 @@ import {
   Brain,
   ShieldCheck,
   Activity,
-  Sparkles,
 } from "lucide-react";
 
 export default function Home() {
@@ -26,7 +24,7 @@ export default function Home() {
           { label: "Recursos", href: "#recursos" },
           { label: "Preços", href: "#precos" },
           { label: "Nossa IA", href: "#nossa-ia" },
-          { label: "Depoimentos", href: "#contato" },
+          { label: "Depoimentos", href: "#depoimentos" },
         ]}
         ctaLabel="Começar Grátis"
         ctaHref="#precos"
@@ -59,47 +57,82 @@ export default function Home() {
             <div className="grid items-center gap-10 lg:gap-16 xl:gap-20 lg:grid-cols-2">
               <div className="relative order-2 overflow-hidden rounded-3xl bg-gradient-to-br from-[#00ccbd]/5 to-[#00a89a]/5 p-8 lg:order-1 border border-[#00ccbd]/10">
                 <div className="relative space-y-6">
-                  {/* Fluxo visual: Gravação → IA → Prontuário */}
-                  <div className="flex items-center justify-center gap-4">
+                  {/* Fluxo visual animado sequencial: Gravação → IA → Prontuário */}
+                  <div className="flex items-start justify-center gap-0">
+                    {/* Passo 1: Consulta Médica - SEMPRE ATIVO */}
                     <div className="flex flex-col items-center gap-3">
-                      <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-[#00ccbd] to-[#00a89a] shadow-lg">
-                        <Stethoscope className="h-8 w-8 text-white" />
+                      <div className="relative">
+                        {/* Glow permanente */}
+                        <div className="absolute inset-0 bg-gradient-to-br from-[#00ccbd] to-[#00a89a] rounded-2xl blur-lg opacity-60 animate-[glow_2s_ease-in-out_infinite]" />
+                        {/* Ícone ativo */}
+                        <div className="relative flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-[#00ccbd] to-[#00a89a] shadow-2xl shadow-[#00ccbd]/40 ring-2 ring-[#00ccbd]/30 ring-offset-2 ring-offset-white dark:ring-offset-[#0f0f0f]">
+                          <Stethoscope className="h-8 w-8 text-white" />
+                        </div>
                       </div>
-                      <p className="text-xs font-semibold text-[#5e5e5e] dark:text-[#d1d1d1] text-center">
+                      <p className="text-xs font-semibold text-[#007c79] dark:text-[#00ccbd] text-center">
                         Consulta
                         <br />
                         Médica
                       </p>
                     </div>
 
-                    <div className="flex items-center">
-                      <div className="h-0.5 w-8 bg-gradient-to-r from-[#00ccbd] to-[#00a89a]" />
-                      <div className="h-2 w-2 rounded-full bg-[#00a89a] animate-pulse" />
-                      <div className="h-0.5 w-8 bg-gradient-to-r from-[#00a89a] to-[#00ccbd]" />
+                    {/* Animação de fluxo 1 - Linha que enche */}
+                    <div className="flex items-center relative w-16 mt-8">
+                      {/* Linha base (cinza) */}
+                      <div className="h-0.5 w-full bg-[#e5e5e5] dark:bg-[#2a2a2a]" />
+                      {/* Linha que enche (gradiente) */}
+                      <div className="absolute left-0 top-1/2 -translate-y-1/2 h-0.5 w-full overflow-hidden">
+                        <div className="h-full w-full bg-gradient-to-r from-[#00ccbd] to-[#00a89a] animate-[fillLine_6s_ease-in-out_infinite]" />
+                      </div>
+                      {/* Ponto no final da linha */}
+                      <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 h-2.5 w-2.5 rounded-full bg-[#00a89a] shadow-lg shadow-[#00a89a]/50 opacity-0 animate-[showDot_6s_ease-in-out_infinite]" />
                     </div>
 
+                    {/* Passo 2: IA Vital AI - Ativa quando linha 1 termina */}
                     <div className="flex flex-col items-center gap-3">
-                      <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-[#00ccbd] to-[#00a89a] shadow-lg animate-pulse">
-                        <Brain className="h-8 w-8 text-white" />
+                      <div className="relative">
+                        {/* Glow que ativa depois */}
+                        <div className="absolute inset-0 bg-gradient-to-br from-[#00ccbd] to-[#00a89a] rounded-2xl blur-lg opacity-0 animate-[glowDelayed_6s_ease-in-out_infinite]" />
+                        {/* Ícone inativo que ativa */}
+                        <div className="relative flex h-16 w-16 items-center justify-center rounded-2xl bg-[#e5e5e5] dark:bg-[#2a2a2a] shadow-lg animate-[activateIcon_6s_ease-in-out_infinite]">
+                          <Brain className="h-8 w-8 text-[#919191] dark:text-[#5e5e5e] animate-[activateIconColor_6s_ease-in-out_infinite]" />
+                        </div>
+                        {/* Badge de atividade */}
+                        <div className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center opacity-0 animate-[showBadge_6s_ease-in-out_infinite]">
+                          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#00ccbd] opacity-75" />
+                          <span className="relative inline-flex h-3 w-3 rounded-full bg-[#00ccbd]" />
+                        </div>
                       </div>
-                      <p className="text-xs font-semibold text-[#5e5e5e] dark:text-[#d1d1d1] text-center">
+                      <p className="text-xs font-semibold text-[#919191] dark:text-[#5e5e5e] text-center animate-[activateText_6s_ease-in-out_infinite]">
                         IA
                         <br />
                         Vital AI
                       </p>
                     </div>
 
-                    <div className="flex items-center">
-                      <div className="h-0.5 w-8 bg-gradient-to-r from-[#00ccbd] to-[#00a89a]" />
-                      <div className="h-2 w-2 rounded-full bg-[#00a89a] animate-pulse" />
-                      <div className="h-0.5 w-8 bg-gradient-to-r from-[#00a89a] to-[#00ccbd]" />
+                    {/* Animação de fluxo 2 - Linha que enche depois */}
+                    <div className="flex items-center relative w-16 mt-8">
+                      {/* Linha base (cinza) */}
+                      <div className="h-0.5 w-full bg-[#e5e5e5] dark:bg-[#2a2a2a]" />
+                      {/* Linha que enche (gradiente) */}
+                      <div className="absolute left-0 top-1/2 -translate-y-1/2 h-0.5 w-full overflow-hidden">
+                        <div className="h-full w-full bg-gradient-to-r from-[#00ccbd] to-[#00a89a] animate-[fillLine2_6s_ease-in-out_infinite]" />
+                      </div>
+                      {/* Ponto no final da linha */}
+                      <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 h-2.5 w-2.5 rounded-full bg-[#00a89a] shadow-lg shadow-[#00a89a]/50 opacity-0 animate-[showDot2_6s_ease-in-out_infinite]" />
                     </div>
 
+                    {/* Passo 3: Prontuário Estruturado - Ativa quando linha 2 termina */}
                     <div className="flex flex-col items-center gap-3">
-                      <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-[#00ccbd] to-[#00a89a] shadow-lg">
-                        <ClipboardList className="h-8 w-8 text-white" />
+                      <div className="relative">
+                        {/* Glow que ativa depois */}
+                        <div className="absolute inset-0 bg-gradient-to-br from-[#00ccbd] to-[#00a89a] rounded-2xl blur-lg opacity-0 animate-[glowDelayed2_6s_ease-in-out_infinite]" />
+                        {/* Ícone inativo que ativa */}
+                        <div className="relative flex h-16 w-16 items-center justify-center rounded-2xl bg-[#e5e5e5] dark:bg-[#2a2a2a] shadow-lg animate-[activateIcon2_6s_ease-in-out_infinite]">
+                          <ClipboardList className="h-8 w-8 text-[#919191] dark:text-[#5e5e5e] animate-[activateIconColor2_6s_ease-in-out_infinite]" />
+                        </div>
                       </div>
-                      <p className="text-xs font-semibold text-[#5e5e5e] dark:text-[#d1d1d1] text-center">
+                      <p className="text-xs font-semibold text-[#919191] dark:text-[#5e5e5e] text-center animate-[activateText2_6s_ease-in-out_infinite]">
                         Prontuário
                         <br />
                         Estruturado
@@ -109,9 +142,9 @@ export default function Home() {
 
                   {/* Cards de benefícios visuais */}
                   <div className="grid grid-cols-2 gap-4 pt-6">
-                    <div className="rounded-xl bg-white dark:bg-[#1a1a1a] p-4 shadow-sm border border-[#00ccbd]/10">
+                    <div className="rounded-xl bg-white dark:bg-[#1a1a1a] p-4 shadow-sm border border-[#00ccbd]/10 animate-[fadeIn_0.6s_ease-in-out_0.8s_backwards] hover:shadow-md hover:-translate-y-0.5 transition-all duration-300">
                       <div className="flex items-center gap-2 mb-2">
-                        <div className="h-2 w-2 rounded-full bg-[#00a89a]" />
+                        <div className="h-2 w-2 rounded-full bg-[#00a89a] animate-pulse" />
                         <p className="text-xs font-bold text-[#3b3b3b] dark:text-[#f4f4f4]">
                           Transcrição automática
                         </p>
@@ -121,9 +154,9 @@ export default function Home() {
                       </p>
                     </div>
 
-                    <div className="rounded-xl bg-white dark:bg-[#1a1a1a] p-4 shadow-sm border border-[#00ccbd]/10">
+                    <div className="rounded-xl bg-white dark:bg-[#1a1a1a] p-4 shadow-sm border border-[#00ccbd]/10 animate-[fadeIn_0.6s_ease-in-out_0.9s_backwards] hover:shadow-md hover:-translate-y-0.5 transition-all duration-300">
                       <div className="flex items-center gap-2 mb-2">
-                        <div className="h-2 w-2 rounded-full bg-[#00a89a]" />
+                        <div className="h-2 w-2 rounded-full bg-[#00a89a] animate-pulse" />
                         <p className="text-xs font-bold text-[#3b3b3b] dark:text-[#f4f4f4]">
                           SOAP organizado
                         </p>
@@ -133,9 +166,21 @@ export default function Home() {
                       </p>
                     </div>
 
-                    <div className="rounded-xl bg-white dark:bg-[#1a1a1a] p-4 shadow-sm border border-[#00ccbd]/10">
+                    <div className="rounded-xl bg-white dark:bg-[#1a1a1a] p-4 shadow-sm border border-[#00ccbd]/10 animate-[fadeIn_0.6s_ease-in-out_1s_backwards] hover:shadow-md hover:-translate-y-0.5 transition-all duration-300">
                       <div className="flex items-center gap-2 mb-2">
-                        <div className="h-2 w-2 rounded-full bg-[#00a89a]" />
+                        <div className="h-2 w-2 rounded-full bg-[#00a89a] animate-pulse" />
+                        <p className="text-xs font-bold text-[#3b3b3b] dark:text-[#f4f4f4]">
+                          Documentos gerados
+                        </p>
+                      </div>
+                      <p className="text-xs text-[#5e5e5e] dark:text-[#d1d1d1]">
+                        Receitas e orientações
+                      </p>
+                    </div>
+
+                    <div className="rounded-xl bg-white dark:bg-[#1a1a1a] p-4 shadow-sm border border-[#00ccbd]/10 animate-[fadeIn_0.6s_ease-in-out_1.1s_backwards] hover:shadow-md hover:-translate-y-0.5 transition-all duration-300">
+                      <div className="flex items-center gap-2 mb-2">
+                        <div className="h-2 w-2 rounded-full bg-[#00a89a] animate-pulse" />
                         <p className="text-xs font-bold text-[#3b3b3b] dark:text-[#f4f4f4]">
                           Documentos gerados
                         </p>
@@ -262,192 +307,7 @@ export default function Home() {
         </div>
         <div className="container relative mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-7xl">
-            <div className="text-center mb-16">
-              <p className="mb-3 text-xs font-bold uppercase tracking-wider text-[#00a89a]">
-                Planos
-              </p>
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#3b3b3b] dark:text-[#f4f4f4] mb-4">
-                Escolha o melhor plano para sua prática médica
-              </h2>
-              <p className="text-lg text-[#5e5e5e] dark:text-[#d1d1d1] max-w-3xl mx-auto">
-                Comece gratuitamente e escale conforme sua necessidade
-              </p>
-            </div>
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4 max-w-7xl mx-auto">
-              {/* Plano Grátis */}
-              <div className="relative rounded-2xl border-2 border-[#e5e5e5] dark:border-[#2a2a2a] bg-white dark:bg-[#101010] p-6 shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
-                <div className="mb-6">
-                  <p className="text-sm font-semibold text-[#00a89a] mb-2">
-                    Grátis
-                  </p>
-                  <div className="flex items-baseline gap-1 mb-2">
-                    <span className="text-4xl font-bold text-[#3b3b3b] dark:text-[#f4f4f4]">
-                      R$ 0
-                    </span>
-                  </div>
-                  <p className="text-sm text-[#5e5e5e] dark:text-[#d1d1d1]">
-                    Para testar a plataforma
-                  </p>
-                </div>
-                <div className="space-y-3 mb-6">
-                  <div className="flex items-start gap-2">
-                    <div className="h-1.5 w-1.5 rounded-full bg-[#00a89a] mt-2 flex-shrink-0" />
-                    <p className="text-sm text-[#5e5e5e] dark:text-[#d1d1d1]">
-                      3 consultas para testar
-                    </p>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <div className="h-1.5 w-1.5 rounded-full bg-[#00a89a] mt-2 flex-shrink-0" />
-                    <p className="text-sm text-[#5e5e5e] dark:text-[#d1d1d1]">
-                      Acesso a todos os recursos
-                    </p>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <div className="h-1.5 w-1.5 rounded-full bg-[#00a89a] mt-2 flex-shrink-0" />
-                    <p className="text-sm text-[#5e5e5e] dark:text-[#d1d1d1]">
-                      Sem cartão de crédito
-                    </p>
-                  </div>
-                </div>
-                <button className="w-full rounded-xl bg-[#f4f4f4] dark:bg-[#1a1a1a] py-3 px-4 text-sm font-semibold text-[#3b3b3b] dark:text-[#f4f4f4] hover:bg-[#e5e5e5] dark:hover:bg-[#2a2a2a] transition-colors">
-                  Começar grátis
-                </button>
-              </div>
-
-              {/* Plano Básico */}
-              <div className="relative rounded-2xl border-2 border-[#e5e5e5] dark:border-[#2a2a2a] bg-white dark:bg-[#101010] p-6 shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
-                <div className="mb-6">
-                  <p className="text-sm font-semibold text-[#00a89a] mb-2">
-                    Básico
-                  </p>
-                  <div className="flex items-baseline gap-1 mb-2">
-                    <span className="text-4xl font-bold text-[#3b3b3b] dark:text-[#f4f4f4]">
-                      R$ 119
-                    </span>
-                    <span className="text-sm text-[#5e5e5e] dark:text-[#d1d1d1]">
-                      ,99/mês
-                    </span>
-                  </div>
-                  <p className="text-sm text-[#5e5e5e] dark:text-[#d1d1d1]">
-                    Para profissionais iniciantes
-                  </p>
-                </div>
-                <div className="space-y-3 mb-6">
-                  <div className="flex items-start gap-2">
-                    <div className="h-1.5 w-1.5 rounded-full bg-[#00a89a] mt-2 flex-shrink-0" />
-                    <p className="text-sm text-[#5e5e5e] dark:text-[#d1d1d1]">
-                      30 consultas/mês
-                    </p>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <div className="h-1.5 w-1.5 rounded-full bg-[#00a89a] mt-2 flex-shrink-0" />
-                    <p className="text-sm text-[#5e5e5e] dark:text-[#d1d1d1]">
-                      Todos os recursos
-                    </p>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <div className="h-1.5 w-1.5 rounded-full bg-[#00a89a] mt-2 flex-shrink-0" />
-                    <p className="text-sm text-[#5e5e5e] dark:text-[#d1d1d1]">
-                      Suporte por email
-                    </p>
-                  </div>
-                </div>
-                <button className="w-full rounded-xl bg-[#f4f4f4] dark:bg-[#1a1a1a] py-3 px-4 text-sm font-semibold text-[#3b3b3b] dark:text-[#f4f4f4] hover:bg-[#e5e5e5] dark:hover:bg-[#2a2a2a] transition-colors">
-                  Assinar agora
-                </button>
-              </div>
-
-              {/* Plano Profissional - Destaque */}
-              <div className="relative rounded-2xl border-2 border-[#00a89a] bg-gradient-to-br from-[#00ccbd]/5 to-[#00a89a]/5 dark:from-[#00ccbd]/10 dark:to-[#00a89a]/10 p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                  <span className="bg-gradient-to-r from-[#00ccbd] to-[#00a89a] text-white text-xs font-bold px-3 py-1 rounded-full">
-                    Mais Popular
-                  </span>
-                </div>
-                <div className="mb-6">
-                  <p className="text-sm font-semibold text-[#00a89a] mb-2">
-                    Profissional
-                  </p>
-                  <div className="flex items-baseline gap-1 mb-2">
-                    <span className="text-4xl font-bold text-[#3b3b3b] dark:text-[#f4f4f4]">
-                      R$ 199
-                    </span>
-                    <span className="text-sm text-[#5e5e5e] dark:text-[#d1d1d1]">
-                      ,99/mês
-                    </span>
-                  </div>
-                  <p className="text-sm text-[#5e5e5e] dark:text-[#d1d1d1]">
-                    Para médicos ativos
-                  </p>
-                </div>
-                <div className="space-y-3 mb-6">
-                  <div className="flex items-start gap-2">
-                    <div className="h-1.5 w-1.5 rounded-full bg-[#00a89a] mt-2 flex-shrink-0" />
-                    <p className="text-sm text-[#5e5e5e] dark:text-[#d1d1d1]">
-                      50 consultas/mês
-                    </p>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <div className="h-1.5 w-1.5 rounded-full bg-[#00a89a] mt-2 flex-shrink-0" />
-                    <p className="text-sm text-[#5e5e5e] dark:text-[#d1d1d1]">
-                      Todos os recursos
-                    </p>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <div className="h-1.5 w-1.5 rounded-full bg-[#00a89a] mt-2 flex-shrink-0" />
-                    <p className="text-sm text-[#5e5e5e] dark:text-[#d1d1d1]">
-                      Suporte prioritário
-                    </p>
-                  </div>
-                </div>
-                <button className="w-full rounded-xl bg-gradient-to-r from-[#00ccbd] to-[#00a89a] py-3 px-4 text-sm font-bold text-white hover:shadow-lg transition-all">
-                  Assinar agora
-                </button>
-              </div>
-
-              {/* Plano Ilimitado */}
-              <div className="relative rounded-2xl border-2 border-[#e5e5e5] dark:border-[#2a2a2a] bg-white dark:bg-[#101010] p-6 shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
-                <div className="mb-6">
-                  <p className="text-sm font-semibold text-[#00a89a] mb-2">
-                    Ilimitado
-                  </p>
-                  <div className="flex items-baseline gap-1 mb-2">
-                    <span className="text-4xl font-bold text-[#3b3b3b] dark:text-[#f4f4f4]">
-                      R$ 299
-                    </span>
-                    <span className="text-sm text-[#5e5e5e] dark:text-[#d1d1d1]">
-                      ,99/mês
-                    </span>
-                  </div>
-                  <p className="text-sm text-[#5e5e5e] dark:text-[#d1d1d1]">
-                    Para alta demanda
-                  </p>
-                </div>
-                <div className="space-y-3 mb-6">
-                  <div className="flex items-start gap-2">
-                    <div className="h-1.5 w-1.5 rounded-full bg-[#00a89a] mt-2 flex-shrink-0" />
-                    <p className="text-sm font-bold text-[#3b3b3b] dark:text-[#f4f4f4]">
-                      Consultas ilimitadas
-                    </p>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <div className="h-1.5 w-1.5 rounded-full bg-[#00a89a] mt-2 flex-shrink-0" />
-                    <p className="text-sm text-[#5e5e5e] dark:text-[#d1d1d1]">
-                      Todos os recursos
-                    </p>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <div className="h-1.5 w-1.5 rounded-full bg-[#00a89a] mt-2 flex-shrink-0" />
-                    <p className="text-sm text-[#5e5e5e] dark:text-[#d1d1d1]">
-                      Suporte prioritário 24/7
-                    </p>
-                  </div>
-                </div>
-                <button className="w-full rounded-xl bg-[#f4f4f4] dark:bg-[#1a1a1a] py-3 px-4 text-sm font-semibold text-[#3b3b3b] dark:text-[#f4f4f4] hover:bg-[#e5e5e5] dark:hover:bg-[#2a2a2a] transition-colors">
-                  Assinar agora
-                </button>
-              </div>
-            </div>
+            <PricingSection />
 
             {/* Nota sobre planos para equipes */}
             <div className="mt-12 text-center">
@@ -464,6 +324,7 @@ export default function Home() {
 
       {/* Prontuário inteligente / bloco grande */}
       <Section
+        id="prontuario"
         align="left"
         eyebrow="Prontuário inteligente"
         title="Sua memória clínica, organizada automaticamente."
@@ -664,9 +525,9 @@ export default function Home() {
                     Legado brasileiro
                   </p>
                   <p className="text-base text-[#3b3b3b] dark:text-[#f4f4f4] leading-relaxed italic">
-                    "Homenageamos Vital Brazil ao nomear nossa IA, perpetuando
+                    `Homenageamos Vital Brazil ao nomear nossa IA, perpetuando
                     seu espírito de inovação científica que continua
-                    transformando a medicina brasileira."
+                    transformando a medicina brasileira`
                   </p>
                 </div>
               </div>
@@ -677,7 +538,7 @@ export default function Home() {
 
       {/* Depoimentos + logos */}
       <section
-        id="contato"
+        id="depoimentos"
         className="relative py-20 lg:py-28 overflow-hidden bg-gradient-to-br from-white via-[#00ccbd]/3 to-[#00a89a]/5 dark:from-[#101010] dark:via-[#00ccbd]/8 dark:to-[#00a89a]/10"
       >
         <div className="pointer-events-none absolute inset-0">

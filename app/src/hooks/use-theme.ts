@@ -5,7 +5,7 @@ import * as React from "react";
 type Theme = "light" | "dark" | "system";
 
 export function useTheme() {
-  const [theme, setThemeState] = React.useState<Theme>("system");
+  const [theme, setThemeState] = React.useState<Theme>("light");
   const [mounted, setMounted] = React.useState(false);
 
   const applyTheme = React.useCallback((newTheme: Theme) => {
@@ -16,9 +16,11 @@ export function useTheme() {
         .matches
         ? "dark"
         : "light";
-      root.classList.toggle("dark", systemTheme === "dark");
+      root.classList.remove("light", "dark");
+      root.classList.add(systemTheme);
     } else {
-      root.classList.toggle("dark", newTheme === "dark");
+      root.classList.remove("light", "dark");
+      root.classList.add(newTheme);
     }
   }, []);
 
@@ -29,11 +31,9 @@ export function useTheme() {
       setThemeState(savedTheme);
       applyTheme(savedTheme);
     } else {
-      const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
-        .matches
-        ? "dark"
-        : "light";
-      applyTheme(systemTheme);
+      // Padrão: tema claro
+      setThemeState("light");
+      applyTheme("light");
     }
   }, [applyTheme]);
 

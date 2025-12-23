@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import {
   Mic,
   MicOff,
@@ -9,6 +9,13 @@ import {
   CheckCircle2,
   RotateCcw,
   AlertCircle,
+  Check,
+  Sparkles,
+  ClipboardList,
+  FileType,
+  Pill,
+  Info,
+  TriangleAlert,
 } from "lucide-react";
 import { Button } from "./button";
 
@@ -70,6 +77,18 @@ export function InteractiveDemo() {
     };
   }, []);
 
+  // Função para parar gravação
+  const handleStop = useCallback(() => {
+    if (mediaRecorderRef.current && state === "recording") {
+      mediaRecorderRef.current.stop();
+
+      // Parar todas as tracks do stream
+      if (streamRef.current) {
+        streamRef.current.getTracks().forEach((track) => track.stop());
+      }
+    }
+  }, [state]);
+
   // Timer de gravação
   useEffect(() => {
     if (state === "recording") {
@@ -92,7 +111,7 @@ export function InteractiveDemo() {
     return () => {
       if (timerRef.current) clearInterval(timerRef.current);
     };
-  }, [state]);
+  }, [state, handleStop]);
 
   const handleStart = async () => {
     try {
@@ -167,17 +186,6 @@ export function InteractiveDemo() {
         setErrorMessage("Nenhum microfone encontrado no dispositivo.");
       } else {
         setErrorMessage("Erro ao acessar o microfone: " + (err.message || ""));
-      }
-    }
-  };
-
-  const handleStop = () => {
-    if (mediaRecorderRef.current && state === "recording") {
-      mediaRecorderRef.current.stop();
-
-      // Parar todas as tracks do stream
-      if (streamRef.current) {
-        streamRef.current.getTracks().forEach((track) => track.stop());
       }
     }
   };
@@ -382,9 +390,15 @@ export function InteractiveDemo() {
               </p>
             </div>
             <div className="space-y-2 text-xs text-[#919191] text-center">
-              <p>✓ Transcrição com Whisper Large V3</p>
-              <p>✓ Análise com Llama 3.3 70B</p>
-              <p>✓ Estruturação do prontuário SOAP</p>
+              <p className="flex items-center justify-center gap-2">
+                <Check className="h-3 w-3" /> Transcrição com Whisper Large V3
+              </p>
+              <p className="flex items-center justify-center gap-2">
+                <Check className="h-3 w-3" /> Análise com Llama 3.3 70B
+              </p>
+              <p className="flex items-center justify-center gap-2">
+                <Check className="h-3 w-3" /> Estruturação do prontuário SOAP
+              </p>
             </div>
           </div>
         )}
@@ -435,8 +449,9 @@ export function InteractiveDemo() {
                 </div>
               </div>
               <div className="flex flex-col items-end gap-1">
-                <span className="rounded-full bg-gradient-to-r from-[#00ccbd]/20 to-[#00a89a]/20 px-2.5 py-0.5 text-[9px] font-bold text-[#007c79] dark:text-[#00ccbd] border border-[#00ccbd]/30">
-                  ✨ Whisper V3
+                <span className="rounded-full bg-gradient-to-r from-[#00ccbd]/20 to-[#00a89a]/20 px-2.5 py-0.5 text-[9px] font-bold text-[#007c79] dark:text-[#00ccbd] border border-[#00ccbd]/30 flex items-center gap-1">
+                  <Sparkles className="h-2.5 w-2.5" />
+                  Whisper V3
                 </span>
                 <span className="text-[8px] text-[#919191]">
                   {recordingTime}s gravados
@@ -450,8 +465,9 @@ export function InteractiveDemo() {
                 <div className="absolute top-2 right-2 flex h-6 w-6 items-center justify-center rounded-full bg-[#00ccbd]/20">
                   <FileText className="h-3 w-3 text-[#007c79] dark:text-[#00ccbd]" />
                 </div>
-                <h4 className="mb-2 text-[11px] font-bold text-[#007c79] dark:text-[#00ccbd] uppercase tracking-wide">
-                  📋 Resumo Clínico
+                <h4 className="mb-2 text-[11px] font-bold text-[#007c79] dark:text-[#00ccbd] uppercase tracking-wide flex items-center gap-1">
+                  <ClipboardList className="h-3 w-3" />
+                  Resumo Clínico
                 </h4>
                 <p className="text-xs leading-relaxed text-[#3b3b3b] dark:text-[#f4f4f4] pr-8">
                   {medicalRecord.summary}
@@ -464,8 +480,9 @@ export function InteractiveDemo() {
               <div className="space-y-2">
                 <div className="flex items-center gap-2">
                   <div className="h-5 w-1 bg-gradient-to-b from-[#00ccbd] to-[#00a89a] rounded-full" />
-                  <h4 className="text-[11px] font-bold text-[#3b3b3b] dark:text-[#f4f4f4] uppercase tracking-wide">
-                    🏥 Prontuário SOAP
+                  <h4 className="text-[11px] font-bold text-[#3b3b3b] dark:text-[#f4f4f4] uppercase tracking-wide flex items-center gap-1.5">
+                    <ClipboardList className="h-3.5 w-3.5" />
+                    Prontuário SOAP
                   </h4>
                 </div>
                 <div className="grid grid-cols-2 gap-2">
@@ -502,14 +519,14 @@ export function InteractiveDemo() {
               <div className="rounded-lg bg-gradient-to-r from-[#f4f4f4] to-white/60 dark:from-[#1a1a1a] dark:to-[#0f0f0f]/60 p-3 border border-[#f4f4f4] dark:border-[#2a2a2a]">
                 <div className="flex items-center gap-2 mb-2">
                   <div className="flex h-6 w-6 items-center justify-center rounded-full bg-[#5e5e5e]/10">
-                    <span className="text-xs">📝</span>
+                    <FileType className="h-3.5 w-3.5 text-[#5e5e5e] dark:text-[#d1d1d1]" />
                   </div>
                   <span className="text-[10px] font-bold text-[#3b3b3b] dark:text-[#f4f4f4] uppercase tracking-wide">
                     Transcrição Original
                   </span>
                 </div>
                 <p className="text-[11px] leading-relaxed text-[#5e5e5e] dark:text-[#d1d1d1] italic">
-                  "{transcricao}"
+                  `{transcricao}`
                 </p>
               </div>
             )}
@@ -519,7 +536,7 @@ export function InteractiveDemo() {
               {medicalRecord?.documents.prescription && (
                 <div className="group relative rounded-lg bg-gradient-to-br from-blue-500/10 to-blue-500/5 p-2.5 dark:from-blue-500/20 dark:to-blue-500/10 border-2 border-blue-500/30 hover:border-blue-500/50 transition-all duration-200 hover:shadow-md">
                   <div className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-blue-500/20 border border-blue-500/30">
-                    <span className="text-[10px]">💊</span>
+                    <Pill className="h-2.5 w-2.5 text-blue-600 dark:text-blue-400" />
                   </div>
                   <h5 className="mb-1.5 text-[10px] font-bold text-blue-700 dark:text-blue-400 uppercase tracking-wide">
                     Prescrição
@@ -533,7 +550,7 @@ export function InteractiveDemo() {
               {medicalRecord?.documents.instructions && (
                 <div className="group relative rounded-lg bg-gradient-to-br from-green-500/10 to-green-500/5 p-2.5 dark:from-green-500/20 dark:to-green-500/10 border-2 border-green-500/30 hover:border-green-500/50 transition-all duration-200 hover:shadow-md">
                   <div className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-green-500/20 border border-green-500/30">
-                    <span className="text-[10px]">ℹ️</span>
+                    <Info className="h-2.5 w-2.5 text-green-600 dark:text-green-400" />
                   </div>
                   <h5 className="mb-1.5 text-[10px] font-bold text-green-700 dark:text-green-400 uppercase tracking-wide">
                     Instruções ao Paciente
@@ -550,8 +567,9 @@ export function InteractiveDemo() {
                     <div className="flex h-5 w-5 items-center justify-center rounded-full bg-yellow-500/30">
                       <AlertCircle className="h-3 w-3 text-yellow-700 dark:text-yellow-400" />
                     </div>
-                    <h5 className="text-[10px] font-bold text-yellow-700 dark:text-yellow-400 uppercase tracking-wide">
-                      ⚠️ Alertas Clínicos
+                    <h5 className="text-[10px] font-bold text-yellow-700 dark:text-yellow-400 uppercase tracking-wide flex items-center gap-1">
+                      <TriangleAlert className="h-3 w-3" />
+                      Alertas Clínicos
                     </h5>
                   </div>
                   <ul className="space-y-1 text-[10px] text-yellow-800 dark:text-yellow-300">
@@ -657,24 +675,6 @@ function ResumoSection({ title, content }: ResumoSectionProps) {
   );
 }
 
-interface SOAPSectionProps {
-  title: string;
-  content: string;
-}
-
-function SOAPSection({ title, content }: SOAPSectionProps) {
-  return (
-    <div className="rounded-lg bg-white/60 p-3 dark:bg-[#0f0f0f]/60 border border-[#f4f4f4] dark:border-[#2a2a2a]">
-      <h5 className="mb-1.5 text-[10px] font-bold text-[#007c79] dark:text-[#00ccbd] uppercase tracking-wide">
-        {title}
-      </h5>
-      <p className="text-xs leading-relaxed text-[#3b3b3b] dark:text-[#f4f4f4]">
-        {content}
-      </p>
-    </div>
-  );
-}
-
 interface SOAPMiniSectionProps {
   title: string;
   content: string;
@@ -687,31 +687,6 @@ function SOAPMiniSection({ title, content }: SOAPMiniSectionProps) {
         {title}
       </h5>
       <p className="text-[10px] leading-snug text-[#3b3b3b] dark:text-[#f4f4f4] line-clamp-3">
-        {content}
-      </p>
-    </div>
-  );
-}
-
-interface DocumentCardProps {
-  title: string;
-  content: string;
-  type: "prescription" | "certificate" | "instructions";
-}
-
-function DocumentCard({ title, content, type }: DocumentCardProps) {
-  const bgColors = {
-    prescription: "bg-blue-500/10 dark:bg-blue-500/20 border-blue-500/30",
-    certificate: "bg-purple-500/10 dark:bg-purple-500/20 border-purple-500/30",
-    instructions: "bg-green-500/10 dark:bg-green-500/20 border-green-500/30",
-  };
-
-  return (
-    <div className={`rounded-lg p-3 border ${bgColors[type]}`}>
-      <h5 className="mb-2 text-xs font-semibold text-[#3b3b3b] dark:text-[#f4f4f4]">
-        {title}
-      </h5>
-      <p className="text-xs leading-relaxed text-[#5e5e5e] dark:text-[#d1d1d1] whitespace-pre-line">
         {content}
       </p>
     </div>

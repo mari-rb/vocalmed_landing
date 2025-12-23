@@ -16,14 +16,16 @@ export function ThemeToggle({ variant = "icon", className }: ThemeToggleProps) {
 
   // Evita flash de conteúdo não estilizado
   if (!mounted) {
-    return (
-      <div className={cn("h-10 w-10", className)} />
-    );
+    return <div className={cn("h-10 w-10", className)} />;
   }
 
-  const currentTheme = theme === "system"
-    ? (typeof window !== "undefined" && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light")
-    : theme;
+  const currentTheme =
+    theme === "system"
+      ? typeof window !== "undefined" &&
+        window.matchMedia("(prefers-color-scheme: dark)").matches
+        ? "dark"
+        : "light"
+      : theme;
 
   if (variant === "button") {
     return (
@@ -32,7 +34,14 @@ export function ThemeToggle({ variant = "icon", className }: ThemeToggleProps) {
         size="icon"
         onClick={toggleTheme}
         className={cn("h-10 w-10", className)}
-        aria-label="Alternar tema"
+        aria-label={
+          currentTheme === "dark"
+            ? "Mudar para modo claro"
+            : "Mudar para modo escuro"
+        }
+        title={
+          currentTheme === "dark" ? "Ativar modo claro" : "Ativar modo escuro"
+        }
       >
         {currentTheme === "dark" ? (
           <Sun className="h-5 w-5 text-[#5e5e5e] dark:text-[#f4f4f4]" />
@@ -50,7 +59,14 @@ export function ThemeToggle({ variant = "icon", className }: ThemeToggleProps) {
         "flex h-10 w-10 items-center justify-center rounded-md transition-colors hover:bg-[#f4f4f4] dark:hover:bg-[#2a2a2a]",
         className
       )}
-      aria-label="Alternar tema"
+      aria-label={
+        currentTheme === "dark"
+          ? "Mudar para modo claro"
+          : "Mudar para modo escuro"
+      }
+      title={
+        currentTheme === "dark" ? "Ativar modo claro" : "Ativar modo escuro"
+      }
     >
       {currentTheme === "dark" ? (
         <Sun className="h-5 w-5 text-[#5e5e5e] dark:text-[#f4f4f4]" />
@@ -60,7 +76,3 @@ export function ThemeToggle({ variant = "icon", className }: ThemeToggleProps) {
     </button>
   );
 }
-
-
-
-

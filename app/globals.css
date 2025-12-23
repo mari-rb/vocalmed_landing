@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@config "../tailwind.config.ts";
+
 :root {
   /* Cores da paleta VocalMed */
   --teal-dark: #007c79;
@@ -51,7 +53,7 @@
 
 /* Fallback para preferência do sistema (se não houver classe) */
 @media (prefers-color-scheme: dark) {
-  :root:not(.light) {
+  :root:not(.light):not(.dark) {
     --background: #0a0a0a;
     --foreground: #f4f4f4;
     --primary: #1fa093;
@@ -98,5 +100,314 @@ body {
   .container {
     padding-left: 5rem;
     padding-right: 5rem;
+  }
+}
+
+/* Animações customizadas */
+
+/* Data attribute selectors para pricing toggle */
+[data-billing="monthly"] [data-billing="annual"]:not([data-billing-toggle]) {
+  display: none;
+}
+
+[data-billing="annual"] [data-billing="monthly"]:not([data-billing-toggle]) {
+  display: none;
+}
+
+[data-billing-toggle][data-billing="monthly"]
+  [class*="data-[billing=monthly]"] {
+  display: inline;
+}
+
+[data-billing-toggle][data-billing="monthly"] [class*="data-[billing=annual]"] {
+  display: none;
+}
+
+[data-billing-toggle][data-billing="annual"] [class*="data-[billing=monthly]"] {
+  display: none;
+}
+
+[data-billing-toggle][data-billing="annual"] [class*="data-[billing=annual]"] {
+  display: inline;
+}
+
+[data-billing-toggle][data-billing="annual"] [class*="translate-x-7"] {
+  transform: translateX(1.75rem);
+}
+
+/* Keyframes */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Linha 1: enche de 0-33% do ciclo */
+@keyframes fillLine {
+  0% {
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+  33% {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+  100% {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+}
+
+/* Ponto 1: aparece em 33% quando linha termina */
+@keyframes showDot {
+  0%,
+  32% {
+    opacity: 0;
+    transform: translateY(-50%) translateX(50%) scale(0);
+  }
+  33% {
+    opacity: 1;
+    transform: translateY(-50%) translateX(50%) scale(1.2);
+  }
+  35%,
+  100% {
+    opacity: 1;
+    transform: translateY(-50%) translateX(50%) scale(1);
+  }
+}
+
+/* Linha 2: enche de 33-66% do ciclo */
+@keyframes fillLine2 {
+  0%,
+  33% {
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+  66% {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+  100% {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+}
+
+/* Ponto 2: aparece em 66% quando linha 2 termina */
+@keyframes showDot2 {
+  0%,
+  65% {
+    opacity: 0;
+    transform: translateY(-50%) translateX(50%) scale(0);
+  }
+  66% {
+    opacity: 1;
+    transform: translateY(-50%) translateX(50%) scale(1.2);
+  }
+  68%,
+  100% {
+    opacity: 1;
+    transform: translateY(-50%) translateX(50%) scale(1);
+  }
+}
+
+@keyframes glow {
+  0%,
+  100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 0.9;
+  }
+}
+
+/* Glow IA: ativa em 33% */
+@keyframes glowDelayed {
+  0%,
+  32% {
+    opacity: 0;
+  }
+  33% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 0.9;
+  }
+  100% {
+    opacity: 0.6;
+  }
+}
+
+/* Glow Prontuário: ativa em 66% */
+@keyframes glowDelayed2 {
+  0%,
+  65% {
+    opacity: 0;
+  }
+  66% {
+    opacity: 0.6;
+  }
+  83% {
+    opacity: 0.9;
+  }
+  100% {
+    opacity: 0.6;
+  }
+}
+
+/* Ícone IA: ativa em 33% */
+@keyframes activateIcon {
+  0%,
+  32% {
+    background: rgb(229, 229, 229);
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+    transform: scale(1);
+  }
+  33% {
+    transform: scale(1.15);
+  }
+  35%,
+  100% {
+    background: linear-gradient(to bottom right, #00ccbd, #00a89a);
+    box-shadow: 0 20px 25px -5px rgb(0 204 189 / 0.4),
+      0 0 0 2px rgb(0 204 189 / 0.3);
+    transform: scale(1);
+  }
+}
+
+/* Ícone Prontuário: ativa em 66% */
+@keyframes activateIcon2 {
+  0%,
+  65% {
+    background: rgb(229, 229, 229);
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+    transform: scale(1);
+  }
+  66% {
+    transform: scale(1.15);
+  }
+  68%,
+  100% {
+    background: linear-gradient(to bottom right, #00ccbd, #00a89a);
+    box-shadow: 0 20px 25px -5px rgb(0 204 189 / 0.4),
+      0 0 0 2px rgb(0 204 189 / 0.3);
+    transform: scale(1);
+  }
+}
+
+@keyframes activateIconDark {
+  0%,
+  32% {
+    background: rgb(42, 42, 42);
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+    transform: scale(1);
+  }
+  33% {
+    transform: scale(1.15);
+  }
+  35%,
+  100% {
+    background: linear-gradient(to bottom right, #00ccbd, #00a89a);
+    box-shadow: 0 20px 25px -5px rgb(0 204 189 / 0.4),
+      0 0 0 2px rgb(0 204 189 / 0.3);
+    transform: scale(1);
+  }
+}
+
+@keyframes activateIconColor {
+  0%,
+  32% {
+    color: rgb(145, 145, 145);
+  }
+  35%,
+  100% {
+    color: rgb(255, 255, 255);
+  }
+}
+
+@keyframes activateIconColor2 {
+  0%,
+  65% {
+    color: rgb(145, 145, 145);
+  }
+  68%,
+  100% {
+    color: rgb(255, 255, 255);
+  }
+}
+
+@keyframes activateIconColorDark {
+  0%,
+  32% {
+    color: rgb(94, 94, 94);
+  }
+  35%,
+  100% {
+    color: rgb(255, 255, 255);
+  }
+}
+
+@keyframes showBadge {
+  0%,
+  32% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  33% {
+    opacity: 1;
+    transform: scale(1.3);
+  }
+  35%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes activateText {
+  0%,
+  32% {
+    color: rgb(145, 145, 145);
+  }
+  35%,
+  100% {
+    color: #007c79;
+  }
+}
+
+@keyframes activateText2 {
+  0%,
+  65% {
+    color: rgb(145, 145, 145);
+  }
+  68%,
+  100% {
+    color: #007c79;
+  }
+}
+
+@keyframes activateTextDark {
+  0%,
+  32% {
+    color: rgb(94, 94, 94);
+  }
+  35%,
+  100% {
+    color: #00ccbd;
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
   }
 }
