@@ -10,7 +10,7 @@ export function CtaSection() {
             Pronto para começar?
           </p>
           <h2 className="text-2xl font-semibold leading-tight sm:text-3xl lg:text-4xl">
-            Descubra um novo ritmo nas suas consultas.
+            Descubra um novo ritmo nas suas consultas
           </h2>
           <p className="text-base sm:text-lg text-white/90">
             Reduza o tempo de digitação, aumente o olhar para o paciente e deixe

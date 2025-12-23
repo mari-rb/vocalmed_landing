@@ -46,7 +46,7 @@ export default function Home() {
                 Nossa missão na Vocalmed
               </p>
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#3b3b3b] dark:text-[#f4f4f4] mb-4">
-                Consultas mais humanas, registros mais inteligentes.
+                Consultas mais humanas, registros mais inteligentes
               </h2>
               <p className="text-base text-[#5e5e5e] dark:text-[#d1d1d1] max-w-3xl mx-auto">
                 Vocalmed foi criada para que médicos possam olhar mais para o
@@ -241,7 +241,7 @@ export default function Home() {
       <Section
         id="recursos"
         eyebrow="Recursos principais"
-        title="Tudo o que você precisa para registrar consultas com IA."
+        title="Tudo o que você precisa para registrar consultas com IA"
         description="Da gravação segura à geração de documentos clínicos completos, a Vocalmed acompanha o fluxo de trabalho de consultórios e clínicas."
       >
         <div className="grid gap-6 md:gap-8 md:grid-cols-2 lg:grid-cols-4">
@@ -327,7 +327,7 @@ export default function Home() {
         id="prontuario"
         align="left"
         eyebrow="Prontuário inteligente"
-        title="Sua memória clínica, organizada automaticamente."
+        title="Sua memória clínica, organizada automaticamente"
         description="Veja em um único painel o que foi discutido, decidido e orientado em cada consulta, com campos estruturados para integrar ao seu prontuário eletrônico."
       >
         <div className="grid items-stretch gap-8 lg:gap-12 lg:grid-cols-[1.2fr_minmax(0,1fr)]">
@@ -551,7 +551,7 @@ export default function Home() {
                 Depoimentos
               </p>
               <h2 className="text-3xl md:text-4xl font-bold text-[#3b3b3b] dark:text-[#f4f4f4] mb-4">
-                Médicos que já registram consultas com a Vocalmed.
+                Médicos que já registram consultas com a Vocalmed
               </h2>
               <p className="text-base text-[#5e5e5e] dark:text-[#d1d1d1] max-w-3xl mx-auto">
                 Veja como diferentes especialidades estão usando a gravação de
@@ -590,7 +590,7 @@ export default function Home() {
       {/* Diferenciais */}
       <Section
         eyebrow="Por que Vocalmed?"
-        title="Pensada para a realidade do consultório."
+        title="Pensada para a realidade do consultório"
         description="Não é apenas um gravador com IA genérica. A Vocalmed nasce dentro do dia a dia de quem atende pacientes e precisa documentar com responsabilidade."
       >
         <div className="grid gap-6 md:gap-8 md:grid-cols-3">
